@@ -2,267 +2,400 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>MEGABONK – Main Menu Mock</title>
+  <title>MEGABONK – Main Menu Clone</title>
 
-  <!-- Немного игровых шрифтов -->
+  <!-- Похожий шрифт под логотип -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&family=Changa+One&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap" rel="stylesheet">
 
   <style>
     :root {
-      --gray-dark: #2b2b33;
-      --gray-medium: #494955;
-      --gray-light: #787887;
+      --bg-top: #4eb3e4;
+      --bg-bottom: #2d7bd0;
+
+      --panel-dark: #2b2f39;
+      --panel-mid: #4a4f5d;
+      --panel-light: #7d8490;
+
+      --border-dark: #14151b;
+      --shadow: #05060a;
+
       --accent-yellow: #ffd800;
-      --accent-green: #6dd46c;
-      --accent-blue: #4cc6ff;
-      --bg-top: #59b4e8;
-      --bg-bottom: #3c7ad2;
+      --accent-green: #7ad46b;
+
+      --text-main: #ffffff;
+      --text-muted: #c9c9dd;
     }
 
     * {
       box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      height: 100%;
     }
 
     body {
-      margin: 0;
-      font-family: "Changa One", system-ui, sans-serif;
-      color: #fff;
-      min-height: 100vh;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--text-main);
       background: linear-gradient(var(--bg-top), var(--bg-bottom));
       overflow: hidden;
     }
 
-    /* Простая "трава" внизу */
+    /* Небо + трава внизу */
     body::after {
       content: "";
       position: fixed;
       left: 0;
       right: 0;
       bottom: 0;
-      height: 30vh;
+      height: 32vh;
       background:
-        linear-gradient(to top, #31501f 0 60%, transparent 60%),
+        radial-gradient(circle at 20% 0%, rgba(0,0,0,0.18), transparent 55%),
+        radial-gradient(circle at 80% 0%, rgba(0,0,0,0.16), transparent 55%),
+        linear-gradient(to top, #305122 0 60%, transparent 60%),
         repeating-linear-gradient(
           -45deg,
-          #3f6f23,
-          #3f6f23 10px,
-          #457726 10px,
-          #457726 20px
+          #3e6b22,
+          #3e6b22 9px,
+          #467328 9px,
+          #467328 18px
         );
       pointer-events: none;
       z-index: -1;
     }
 
-    .menu-wrapper {
+    .screen {
       position: relative;
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 24px 24px 40px;
-      display: grid;
-      grid-template-columns: 260px 1fr 320px;
-      gap: 24px;
-      align-items: start;
+      width: 100vw;
       height: 100vh;
+      overflow: hidden;
     }
 
-    /* Центр */
+    /* ===== ЦЕНТР (логотип + основные кнопки) ===== */
 
     .center-panel {
+      position: absolute;
+      top: 18%;
+      left: 50%;
+      transform: translateX(-50%);
       text-align: center;
-      align-self: center;
     }
 
     .game-title {
-      margin: 0;
       font-family: "Luckiest Guy", system-ui, sans-serif;
       font-size: 64px;
       letter-spacing: 4px;
-      text-shadow: 0 6px 0 #000;
+      color: #ffffff;
+      text-shadow:
+        0 8px 0 #000,
+        0 12px 25px rgba(0,0,0,0.8);
     }
 
     .subtitle {
-      margin: 4px 0 24px;
+      margin-top: 4px;
+      margin-bottom: 26px;
       font-size: 16px;
-      text-shadow: 0 3px 0 #000;
       color: #ffeaa7;
+      text-shadow: 0 3px 0 #000;
     }
 
     .main-buttons {
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 14px;
       align-items: center;
     }
 
+    /* Базовый стиль «игровой» кнопки */
     .btn {
-      background: var(--gray-medium);
-      border: 3px solid #14141a;
-      border-radius: 8px;
-      padding: 10px 26px;
+      position: relative;
+      min-width: 190px;
+      padding: 11px 30px;
+      border-radius: 10px;
+      border: 3px solid var(--border-dark);
+      background: linear-gradient(#7f8490, #3f434d);
+      box-shadow:
+        0 4px 0 var(--shadow),
+        0 10px 20px rgba(0,0,0,0.7);
+      color: #f9f9ff;
       font-size: 20px;
-      text-transform: uppercase;
-      color: #fff;
-      cursor: pointer;
-      box-shadow: 0 4px 0 #14141a;
-      text-shadow: 0 2px 0 #000;
       letter-spacing: 1px;
-      min-width: 180px;
-      transition: transform 0.05s ease, box-shadow 0.05s ease, filter 0.15s ease;
+      text-transform: uppercase;
+      text-shadow: 0 2px 0 #000;
+      cursor: pointer;
+      transition:
+        transform 80ms ease-out,
+        box-shadow 80ms ease-out,
+        filter 120ms ease-out;
     }
 
-    .btn span.excl {
-      color: var(--accent-yellow);
+    /* Внутренняя светлая рамка */
+    .btn::before {
+      content: "";
+      position: absolute;
+      inset: 3px;
+      border-radius: 7px;
+      border-top: 2px solid rgba(255,255,255,0.25);
+      border-left: 2px solid rgba(255,255,255,0.16);
+      border-right: 2px solid rgba(0,0,0,0.18);
+      border-bottom: 2px solid rgba(0,0,0,0.35);
+      pointer-events: none;
     }
 
+    /* Жёлтый «!» справа */
+    .btn-alert::after {
+      content: "!";
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 18px;
+      height: 18px;
+      border-radius: 3px;
+      background: var(--accent-yellow);
+      color: #3b3013;
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 18px;
+      text-align: center;
+      text-shadow: none;
+      box-shadow: 0 2px 0 #a28300;
+    }
+
+    /* Состояние наведения */
     .btn:hover {
-      filter: brightness(1.1);
+      filter: brightness(1.08);
+      transform: translateY(-2px);
+      box-shadow:
+        0 6px 0 var(--shadow),
+        0 12px 22px rgba(0,0,0,0.9);
     }
 
+    /* Состояние нажатия */
     .btn:active {
-      transform: translateY(3px);
-      box-shadow: 0 1px 0 #14141a;
+      transform: translateY(2px);
+      box-shadow:
+        0 2px 0 var(--shadow),
+        0 4px 10px rgba(0,0,0,0.9);
+      filter: brightness(0.96);
     }
 
-    /* Левая часть */
-
-    .left-panel {
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      height: 100%;
-      gap: 16px;
+    /* Стрелочные “скобки” выбора (как при выборе геймпадом) */
+    .btn-selected::before,
+    .btn-selected::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      width: 10px;
+      height: 20px;
+      border-radius: 2px;
+      border: 3px solid #ffffff;
+      border-top: none;
+      border-bottom: none;
+      transform: translateY(-50%);
+      box-shadow: 0 0 6px rgba(0,0,0,0.8);
     }
 
-    .quests-block {
+    .btn-selected::before {
+      left: -18px;
+    }
+
+    .btn-selected::after {
+      right: -18px;
+    }
+
+    /* Чтобы внутренняя рамка не перекрывала «скобки» */
+    .btn.btn-selected > span {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ===== ЛЕВАЯ ЧАСТЬ: квесты ===== */
+
+    .left-quests {
+      position: absolute;
+      top: 10%;
+      left: 5%;
+      width: 260px;
       display: flex;
       flex-direction: column;
       gap: 8px;
     }
 
     .quest-card {
-      background: var(--gray-dark);
-      border-radius: 6px;
-      padding: 8px 10px;
-      box-shadow: 0 3px 0 #111;
+      background: var(--panel-dark);
+      border-radius: 8px;
+      padding: 7px 9px;
+      border: 2px solid #14151b;
+      box-shadow: 0 3px 0 #05060a;
       font-size: 12px;
     }
 
     .quest-title {
       font-size: 13px;
-      color: var(--accent-yellow);
-      margin-bottom: 2px;
+      font-weight: 600;
+      color: #ffdd6e;
     }
 
     .quest-desc {
-      opacity: 0.9;
-      margin-bottom: 4px;
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 1px;
+      margin-bottom: 5px;
     }
 
-    .quest-progress-bar {
-      background: #25252c;
+    .quest-progress-wrapper {
+      background: #20232b;
       border-radius: 999px;
-      height: 6px;
+      height: 7px;
       overflow: hidden;
+      box-shadow: inset 0 1px 2px rgba(0,0,0,0.7);
     }
 
     .quest-progress {
       height: 100%;
-      width: 60%;
-      background: linear-gradient(to right, var(--accent-green), var(--accent-blue));
+      background: linear-gradient(to right, #8fe36f, #4bd3ff);
     }
 
     .quest-count {
       font-size: 11px;
+      color: #d9ffde;
       text-align: right;
       margin-top: 2px;
-      opacity: 0.8;
     }
 
-    .left-buttons {
+    /* ===== ЛЕВАЯ ЧАСТЬ: системные кнопки ===== */
+
+    .left-controls {
+      position: absolute;
+      left: 5%;
+      bottom: 7%;
+      width: 170px;
       display: flex;
       flex-direction: column;
       gap: 8px;
     }
 
     .side-btn {
-      background: var(--gray-dark);
-      border-radius: 6px;
-      padding: 8px 12px;
-      font-size: 13px;
+      position: relative;
       display: flex;
       align-items: center;
       gap: 8px;
-      box-shadow: 0 3px 0 #111;
-      border: 2px solid #111;
+      background: linear-gradient(#606472, #32343e);
+      border-radius: 7px;
+      border: 2px solid var(--border-dark);
+      box-shadow: 0 3px 0 var(--shadow);
+      padding: 7px 11px;
+      font-size: 13px;
+      color: #f1f1ff;
+      text-shadow: 0 1px 0 #000;
       cursor: pointer;
-      text-shadow: 0 2px 0 #000;
+      transition:
+        transform 80ms ease-out,
+        box-shadow 80ms ease-out,
+        filter 120ms ease-out;
     }
 
-    .side-btn-label {
+    .side-btn:hover {
+      filter: brightness(1.08);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 0 var(--shadow);
+    }
+
+    .side-btn:active {
+      transform: translateY(1px);
+      box-shadow: 0 1px 0 var(--shadow);
+      filter: brightness(0.96);
+    }
+
+    .side-icon {
+      width: 16px;
+      text-align: center;
+      opacity: 0.9;
+    }
+
+    .side-label {
       flex: 1;
     }
 
-    /* Правая часть – лидерборд */
+    /* ===== ПРАВАЯ ЧАСТЬ: лидерборды ===== */
 
-    .right-panel {
-      align-self: stretch;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
+    .leaderboard-toggle {
+      position: absolute;
+      top: 10%;
+      right: 5%;
+      background: linear-gradient(#636877, #343743);
+      border-radius: 7px;
+      border: 2px solid var(--border-dark);
+      box-shadow: 0 3px 0 var(--shadow);
+      padding: 6px 16px;
+      font-size: 13px;
+      text-shadow: 0 1px 0 #000;
+      cursor: pointer;
+      transition:
+        transform 80ms ease-out,
+        box-shadow 80ms ease-out,
+        filter 120ms ease-out;
     }
 
-    .lb-top-btn {
-      align-self: flex-end;
-      background: var(--gray-medium);
-      border-radius: 6px;
-      padding: 6px 14px;
-      border: 2px solid #111;
-      font-size: 13px;
-      box-shadow: 0 3px 0 #111;
-      cursor: pointer;
-      text-shadow: 0 2px 0 #000;
+    .leaderboard-toggle:hover {
+      filter: brightness(1.07);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 0 var(--shadow);
+    }
+
+    .leaderboard-toggle:active {
+      transform: translateY(1px);
+      box-shadow: 0 1px 0 var(--shadow);
+      filter: brightness(0.96);
     }
 
     .leaderboard {
-      background: var(--gray-dark);
-      border-radius: 8px;
-      padding: 10px;
-      border: 3px solid #111;
-      box-shadow: 0 5px 0 #111;
+      position: absolute;
+      top: 18%;
+      right: 5%;
+      width: 320px;
+      background: var(--panel-dark);
+      border-radius: 10px;
+      padding: 9px;
+      border: 3px solid var(--border-dark);
+      box-shadow: 0 5px 0 var(--shadow);
       font-size: 11px;
     }
 
-    .leaderboard-header {
+    .lb-header {
       display: flex;
       justify-content: space-between;
       align-items: baseline;
-      margin-bottom: 6px;
+      margin-bottom: 4px;
       font-size: 12px;
     }
 
-    .leaderboard-header span.reset {
-      color: var(--accent-yellow);
+    .lb-header span.reset {
       font-size: 10px;
+      color: #ffe483;
     }
 
-    .leaderboard-tabs {
+    .lb-tabs {
       display: flex;
       gap: 6px;
-      font-size: 10px;
       margin-bottom: 6px;
+      font-size: 10px;
     }
 
-    .leaderboard-tab {
-      padding: 3px 8px;
+    .lb-tab {
+      padding: 3px 10px;
       border-radius: 999px;
-      background: #1d1d24;
-      opacity: 0.7;
+      background: #1f2129;
+      opacity: 0.75;
     }
 
-    .leaderboard-tab.active {
-      background: #3e3e4a;
+    .lb-tab.active {
+      background: #3b3f4c;
       opacity: 1;
     }
 
@@ -279,161 +412,207 @@
     }
 
     table.lb-table th {
-      border-bottom: 1px solid #555;
-      font-weight: normal;
-      color: #d9d9ff;
-    }
-
-    table.lb-table tr:nth-child(odd) td {
-      background: rgba(255, 255, 255, 0.03);
+      border-bottom: 1px solid #565b69;
+      color: #d5ddff;
+      font-weight: 500;
     }
 
     table.lb-table td.rank {
       width: 32px;
-      color: #ffa;
+      color: #fffbd0;
     }
 
     table.lb-table td.kills {
       text-align: right;
+      color: #ffe077;
     }
 
-    .current-player {
+    table.lb-table tr:nth-child(odd) td {
+      background: rgba(255,255,255,0.03);
+    }
+
+    .lb-current {
       margin-top: 4px;
       padding-top: 4px;
-      border-top: 1px solid #555;
+      border-top: 1px solid #555a68;
       font-size: 10px;
+      color: #d7d7ff;
       opacity: 0.8;
     }
 
-    .version-label {
-      position: fixed;
-      right: 10px;
-      bottom: 6px;
-      font-size: 10px;
-      opacity: 0.7;
+    /* ===== Монетки / ресурс сверху справа ===== */
+
+    .currency {
+      position: absolute;
+      top: 4%;
+      right: 8%;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 18px;
       text-shadow: 0 2px 0 #000;
     }
 
+    .currency .coin {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 20%, #ffffff, #d5dee8 35%, #9ea7b4 80%);
+      box-shadow:
+        0 3px 0 #5a6672,
+        0 0 10px rgba(0,0,0,0.6);
+      border: 2px solid #5f6b76;
+    }
+
+    /* Версия игры */
+
+    .version-label {
+      position: absolute;
+      right: 10px;
+      bottom: 6px;
+      font-size: 10px;
+      color: #e5e5ff;
+      opacity: 0.65;
+      text-shadow: 0 2px 0 #000;
+    }
+
+    /* Адаптив: на узких экранах просто уменьшаем масштабы */
     @media (max-width: 900px) {
-      .menu-wrapper {
-        grid-template-columns: 1fr;
-        grid-template-rows: auto auto auto;
-        height: auto;
+      .screen {
+        transform: scale(0.8);
+        transform-origin: top left;
       }
-      .center-panel {
-        order: -1;
-        margin-top: 30px;
-      }
-      body::after {
-        height: 22vh;
+    }
+
+    @media (max-width: 700px) {
+      .screen {
+        transform: scale(0.7);
       }
     }
   </style>
 </head>
 <body>
 
-  <div class="menu-wrapper">
-    <!-- LEFT -->
-    <aside class="left-panel">
-      <div class="quests-block">
-        <div class="quest-card">
-          <div class="quest-title">Golden Sneakers</div>
-          <div class="quest-desc">Break 150 pots</div>
-          <div class="quest-progress-bar">
-            <div class="quest-progress" style="width: 96%;"></div>
-          </div>
-          <div class="quest-count">145 / 150</div>
-        </div>
-        <div class="quest-card">
-          <div class="quest-title">Weapon Slot I</div>
-          <div class="quest-desc">Complete 25 Quests</div>
-          <div class="quest-progress-bar">
-            <div class="quest-progress" style="width: 88%;"></div>
-          </div>
-          <div class="quest-count">22 / 25</div>
-        </div>
-        <div class="quest-card">
-          <div class="quest-title">Attraction Tome</div>
-          <div class="quest-desc">Use Shrine of Succ 8 times.</div>
-          <div class="quest-progress-bar">
-            <div class="quest-progress" style="width: 75%;"></div>
-          </div>
-          <div class="quest-count">6 / 8</div>
-        </div>
-        <div class="quest-card">
-          <div class="quest-title">Skip</div>
-          <div class="quest-desc">Complete 30 Quests</div>
-          <div class="quest-progress-bar">
-            <div class="quest-progress" style="width: 73%;"></div>
-          </div>
-          <div class="quest-count">22 / 30</div>
-        </div>
+<div class="screen">
+  <!-- ЦЕНТР -->
+  <section class="center-panel">
+    <h1 class="game-title">MEGABONK</h1>
+    <p class="subtitle">megaing my bonk</p>
+
+    <div class="main-buttons">
+      <button class="btn btn-selected"><span>Play</span></button>
+      <button class="btn btn-alert"><span>Unlocks</span></button>
+      <button class="btn btn-alert"><span>Quests</span></button>
+      <button class="btn btn-alert"><span>Shop</span></button>
+    </div>
+  </section>
+
+  <!-- ЛЕВАЯ КОЛОНКА: квесты -->
+  <aside class="left-quests">
+    <div class="quest-card">
+      <div class="quest-title">Golden Sneakers</div>
+      <div class="quest-desc">Break 150 pots</div>
+      <div class="quest-progress-wrapper">
+        <div class="quest-progress" style="width: 96%;"></div>
       </div>
-
-      <div class="left-buttons">
-        <button class="side-btn"><span class="side-btn-label">⚙ SETTINGS</span></button>
-        <button class="side-btn"><span class="side-btn-label">🌐 English</span></button>
-        <button class="side-btn"><span class="side-btn-label">💬 Discord</span></button>
-        <button class="side-btn"><span class="side-btn-label">← EXIT</span></button>
+      <div class="quest-count">145 / 150</div>
+    </div>
+    <div class="quest-card">
+      <div class="quest-title">Weapon Slot I</div>
+      <div class="quest-desc">Complete 25 Quests</div>
+      <div class="quest-progress-wrapper">
+        <div class="quest-progress" style="width: 88%;"></div>
       </div>
-    </aside>
-
-    <!-- CENTER -->
-    <section class="center-panel">
-      <h1 class="game-title">MEGABONK</h1>
-      <p class="subtitle">megaing my bonk</p>
-
-      <div class="main-buttons">
-        <button class="btn">Play</button>
-        <button class="btn">Unlocks<span class="excl">!</span></button>
-        <button class="btn">Quests<span class="excl">!</span></button>
-        <button class="btn">Shop<span class="excl">!</span></button>
+      <div class="quest-count">22 / 25</div>
+    </div>
+    <div class="quest-card">
+      <div class="quest-title">Attraction Tome</div>
+      <div class="quest-desc">Use Shrine of Succ 8 times.</div>
+      <div class="quest-progress-wrapper">
+        <div class="quest-progress" style="width: 75%;"></div>
       </div>
-    </section>
-
-    <!-- RIGHT -->
-    <aside class="right-panel">
-      <button class="lb-top-btn">All Leaderboards</button>
-
-      <div class="leaderboard">
-        <div class="leaderboard-header">
-          <span>LEADERBOARDS</span>
-          <span class="reset">Reset in 104:48:38</span>
-        </div>
-
-        <div class="leaderboard-tabs">
-          <div class="leaderboard-tab active">Global</div>
-          <div class="leaderboard-tab">Friends</div>
-        </div>
-
-        <table class="lb-table">
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Player</th>
-              <th class="kills">Kills</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr><td class="rank">#1</td><td>Santimil3l</td><td class="kills">3.7M</td></tr>
-            <tr><td class="rank">#2</td><td>BOZO</td><td class="kills">2.3M</td></tr>
-            <tr><td class="rank">#3</td><td>alex</td><td class="kills">1.6M</td></tr>
-            <tr><td class="rank">#4</td><td>SimbaTheSeer</td><td class="kills">1.6M</td></tr>
-            <tr><td class="rank">#5</td><td>monkeyaiim</td><td class="kills">1.6M</td></tr>
-            <tr><td class="rank">#6</td><td>Martyr_Dom VT</td><td class="kills">1.5M</td></tr>
-            <tr><td class="rank">#7</td><td>Sprutz</td><td class="kills">1.5M</td></tr>
-            <tr><td class="rank">#8</td><td>Impulze</td><td class="kills">1.4M</td></tr>
-            <tr><td class="rank">#9</td><td>not here</td><td class="kills">1.4M</td></tr>
-          </tbody>
-        </table>
-
-        <div class="current-player">
-          #45867 – hop3less – 3,087
-        </div>
+      <div class="quest-count">6 / 8</div>
+    </div>
+    <div class="quest-card">
+      <div class="quest-title">Skip</div>
+      <div class="quest-desc">Complete 30 Quests</div>
+      <div class="quest-progress-wrapper">
+        <div class="quest-progress" style="width: 73%;"></div>
       </div>
-    </aside>
+      <div class="quest-count">22 / 30</div>
+    </div>
+  </aside>
+
+  <!-- ЛЕВАЯ КОЛОНКА: системные кнопки -->
+  <div class="left-controls">
+    <button class="side-btn">
+      <span class="side-icon">⚙</span>
+      <span class="side-label">Settings</span>
+    </button>
+    <button class="side-btn">
+      <span class="side-icon">🌐</span>
+      <span class="side-label">English</span>
+    </button>
+    <button class="side-btn">
+      <span class="side-icon">💬</span>
+      <span class="side-label">Discord</span>
+    </button>
+    <button class="side-btn">
+      <span class="side-icon">↩</span>
+      <span class="side-label">Exit</span>
+    </button>
   </div>
 
-  <div class="version-label">version 1.0.7</div>
+  <!-- Кнопка ALL LEADERBOARDS -->
+  <button class="leaderboard-toggle">All Leaderboards</button>
+
+  <!-- ЛИДЕРБОРД -->
+  <aside class="leaderboard">
+    <div class="lb-header">
+      <span>LEADERBOARDS</span>
+      <span class="reset">Reset in 104:48:38</span>
+    </div>
+
+    <div class="lb-tabs">
+      <div class="lb-tab active">Global</div>
+      <div class="lb-tab">Friends</div>
+    </div>
+
+    <table class="lb-table">
+      <thead>
+      <tr>
+        <th>#</th>
+        <th>Player</th>
+        <th class="kills">Kills</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr><td class="rank">#1</td><td>Santimil3l</td><td class="kills">3.7M</td></tr>
+      <tr><td class="rank">#2</td><td>BOZO</td><td class="kills">2.3M</td></tr>
+      <tr><td class="rank">#3</td><td>alex</td><td class="kills">1.6M</td></tr>
+      <tr><td class="rank">#4</td><td>SimbaTheSeer</td><td class="kills">1.6M</td></tr>
+      <tr><td class="rank">#5</td><td>monkeyaiim</td><td class="kills">1.6M</td></tr>
+      <tr><td class="rank">#6</td><td>Martyr_Dom VT</td><td class="kills">1.5M</td></tr>
+      <tr><td class="rank">#7</td><td>Sprutz</td><td class="kills">1.5M</td></tr>
+      <tr><td class="rank">#8</td><td>Impulze</td><td class="kills">1.4M</td></tr>
+      <tr><td class="rank">#9</td><td>not here</td><td class="kills">1.4M</td></tr>
+      </tbody>
+    </table>
+
+    <div class="lb-current">
+      #45867 – hop3less – 3,087
+    </div>
+  </aside>
+
+  <!-- Монетки -->
+  <div class="currency">
+    <div class="coin"></div>
+    <span>51</span>
+  </div>
+
+  <!-- Версия -->
+  <div class="version-label">version 1.0.19</div>
+</div>
+
 </body>
 </html>
